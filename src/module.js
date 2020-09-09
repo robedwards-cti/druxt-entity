@@ -4,6 +4,7 @@ import { resolve } from 'path'
  * The Nuxt.js module function.
  *
  * - Adds the Nuxt.js plugin.
+ * - Sets up autoloading for DruxtEntity and DruxtField prefixed components.
  *
  * The module function should not be used directly, but rather installed via yout Nuxt.js configuration file.
  *
@@ -38,6 +39,23 @@ const DruxtEntityModule = function (moduleOptions = {}) {
     src: resolve(__dirname, '../nuxt/plugin.js'),
     fileName: 'druxt-entity.js',
     options
+  })
+
+  // Add component autoloading rules.
+  this.options.components = Array.isArray(this.options.components) ? this.options.components : []
+
+  // DruxtEntity components.
+  this.options.components.push({
+    path: '~/components/druxt/entity',
+    prefix: 'druxt-entity',
+    global: true
+  })
+
+  // DruxtField componentns.
+  this.options.components.push({
+    path: '~/components/druxt/field',
+    prefix: 'druxt-field',
+    global: true
   })
 }
 
