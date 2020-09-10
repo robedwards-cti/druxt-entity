@@ -17,7 +17,7 @@
       >
         <druxt-field
           :key="key"
-          v-bind="{ ...field, context: { ..._self.context, ...context }, options }"
+          v-bind="fieldProps(field, context, options)"
         />
       </template>
 
@@ -28,7 +28,7 @@
       >
         <druxt-field
           :key="key"
-          v-bind="{ ...field, context: { ..._self.context, ...context }, options }"
+          v-bind="fieldProps(field, context, options)"
         />
       </template>
     </component>
@@ -218,6 +218,26 @@ export default {
     async fetch() {
       await DruxtRouterEntityMixin.fetch.call(this)
       await DruxtSchemaMixin.fetch.call(this)
+    },
+
+    /**
+     * Returns Vue.js properties for a Druxt field component.
+     *
+     * @param {object} field - The Field object.
+     * @param {object} context - The Druxt Context object.
+     * @param {object} options - Options.
+     *
+     * @todo - Move Context functionality to Druxt Common module.
+     */
+    fieldProps(field, context, options) {
+      return {
+        ...field,
+        context: {
+          ...this._self.context,
+          ...context
+        },
+        options
+      }
     },
 
     /**
