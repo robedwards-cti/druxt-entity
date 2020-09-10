@@ -1,16 +1,16 @@
 <template>
-  <!-- Render wrapper component and props. -->
+  <!-- Render wrapper component wrapper mixin. -->
   <component
     :is="wrapper.component"
     v-bind="wrapper.props"
   >
-    <!-- Render suggested component. -->
+    <!-- Render component via suggestion mixin. -->
     <component
       :is="component"
       v-if="entity && schema"
       v-bind="props"
     >
-      <!-- Render fields in their own named slots. --->
+      <!-- Render individual fields named slots. --->
       <template
         v-for="(field, key) of fields"
         v-slot:[field.schema.id]="{ context, options }"
@@ -21,7 +21,7 @@
         />
       </template>
 
-      <!-- Render fields in the default slot. --->
+      <!-- Render all fields in the default slot. --->
       <template
         v-for="(field, key) of fields"
         v-bind="{ context, options }"
@@ -36,6 +36,7 @@
 </template>
 
 <script>
+import { DruxtCommonComponentWrapperMixin } from 'druxt-common'
 import { DruxtRouterEntityMixin } from 'druxt-router'
 import { DruxtSchemaMixin } from 'druxt-schema'
 import { mapActions } from 'vuex'
@@ -52,7 +53,11 @@ import { DruxtEntityContextMixin, DruxtEntityComponentSuggestionMixin } from '..
  *
  * @example @lang vue
  * <!-- Render the specified Aritcle node with with Teaser display mode. -->
- * <druxt-entity type="node--article" :uuid="uuid" :mode="teaser" />
+ * <druxt-entity
+ *   type="node--article"
+ *   :uuid="uuid"
+ *   :mode="teaser"
+ * />
  *
  * @see {@link DruxtField}
  * @see {@link ../mixins/componentSuggestion|DruxtEntityComponentSuggestionMixin}
@@ -63,13 +68,20 @@ export default {
   /**
    * Vue.js Mixins.
    *
+   * @see DruxtCommonComponentWrapperMixin
    * @see {@link ../mixins/componentSuggestion|DruxtEntityComponentSuggestionMixin}
    * @see {@link ../mixins/context|DruxtEntityContextMixin}
    * @see {@link https://router.druxtjs.org/api/mixins/entity.html|DruxtRouterEntityMixin}
-   * @see DruxtSchemaMixin.
+   * @see {@link https://schema.druxtjs.org/api/mixins/schema.html|DruxtSchemaMixin}
    * @see {@link https://vuejs.org/v2/guide/mixins.html}
    */
-  mixins: [DruxtEntityComponentSuggestionMixin, DruxtEntityContextMixin, DruxtRouterEntityMixin, DruxtSchemaMixin],
+  mixins: [
+    DruxtCommonComponentWrapperMixin,
+    DruxtEntityComponentSuggestionMixin,
+    DruxtEntityContextMixin,
+    DruxtRouterEntityMixin,
+    DruxtSchemaMixin
+  ],
 
   /**
    * Nuxt.js fetch method.
@@ -78,29 +90,6 @@ export default {
    */
   async fetch() {
     await this.fetch()
-  },
-
-  /**
-   * Vue.js Properties.
-   *
-   * @see {@link https://vuejs.org/v2/guide/components-props.html}
-   */
-  props: {
-    /**
-     * Wrapper component.
-     *
-     * @type {object}
-     * @default { component: 'div', props: {} }
-     *
-     * @todo Move wrapper prop to new common Wrapper mixin.
-     */
-    wrapper: {
-      type: Object,
-      default: () => ({
-        component: 'div',
-        props: {}
-      })
-    }
   },
 
   /**

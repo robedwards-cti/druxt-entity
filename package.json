@@ -47,6 +47,7 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
+    "druxt-common": "^0.1.0",
     "druxt-router": "^0.16.0",
     "druxt-schema": "^0.5.0"
   },

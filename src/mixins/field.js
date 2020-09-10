@@ -1,4 +1,5 @@
 import { DruxtEntityContextMixin } from './context'
+import { DruxtCommonComponentWrapperMixin } from 'druxt-common'
 
 /**
  * Provides Vue.js properties to render Drupal Field components.
@@ -42,6 +43,7 @@ const DruxtFieldMixin = {
    * @type {object[]}
    */
   mixins: [
+    DruxtCommonComponentWrapperMixin,
     DruxtEntityContextMixin
   ],
 
@@ -80,20 +82,6 @@ const DruxtFieldMixin = {
       type: Object,
       required: true
     },
-
-    /**
-     * Outer wrapper component and props.
-     * @type {object}
-     * @default { component: 'div', props: {} }
-     * @todo Move wrapper prop to new common Wrapper mixin.
-     */
-    wrapper: {
-      type: Object,
-      default: () => ({
-        component: 'div',
-        props: {}
-      })
-    }
   },
 }
 

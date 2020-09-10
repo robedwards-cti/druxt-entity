@@ -95,4 +95,21 @@ describe('Component - DruxtEntity', () => {
 
     expect(wrapper.vm.tokenType).toBe('entity')
   })
+
+  test('fieldProps', async () => {
+    const entity = require('../../__fixtures__/fe00c55d-0335-49d6-964e-a868c0c68f9c.json').data
+    const wrapper = mountComponent(entity)
+    await wrapper.vm.$fetch()
+
+    const field = wrapper.vm.fields.body
+    const context = {}
+    const options = {}
+
+    const props = wrapper.vm.fieldProps(field, context, options)
+    expect(props).toHaveProperty('data')
+    expect(props).toHaveProperty('schema')
+    expect(props).toHaveProperty('relationship')
+    expect(props).toHaveProperty('context')
+    expect(props).toHaveProperty('options')
+  })
 })

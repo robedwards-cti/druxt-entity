@@ -1,4 +1,5 @@
 import { DruxtEntityContextMixin } from './context'
+import { DruxtCommonComponentWrapperMixin } from 'druxt-common'
 
 /**
  * Provides Vue.js properties to render a Drupal Entity JSON:API resource component.
@@ -10,7 +11,10 @@ import { DruxtEntityContextMixin } from './context'
  *
  * @example @lang vue
  * <template>
- *   <div :classes="classes">
+ *   <component
+ *     :is="wrapper.component"
+ *     :props="wrapper.props"
+ *     :classes="classes">
  *     <!-- Render a `druxt-field` component for all renderable fields. -->
  *     <druxt-field
  *       v-for="(field, key) of fields"
@@ -20,7 +24,7 @@ import { DruxtEntityContextMixin } from './context'
  *   </div>
  * </template>
  *
-* <script>
+ * <script>
  * // Import mixin.
  * import { DruxtEntityMixin } from 'druxt-entity'
  *
@@ -37,7 +41,10 @@ const DruxtEntityMixin = {
    * Vue.js mixins.
    * @see {@link context|DruxtEntityContextMixin}
    */
-  mixins: [DruxtEntityContextMixin],
+  mixins: [
+    DruxtCommonComponentWrapperMixin,
+    DruxtEntityContextMixin
+  ],
 
   /**
    * Vue.js Properties.
