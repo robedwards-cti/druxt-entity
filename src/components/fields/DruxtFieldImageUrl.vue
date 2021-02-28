@@ -16,21 +16,21 @@
     />
 
     <!-- Items -->
-    <img
+    <!-- eslint-disable vue/no-v-html -->
+    <span
       v-for="entity of entities"
       :key="entity.id"
-      :src="entity.attributes.uri.value.replace('public://', '/sites/default/files/')"
+      v-html="format(entity)"
     />
+    <!-- eslint-enable vue/no-v-html -->
   </component>
 </template>
 
 <script>
 import DruxtFieldFileDefault from './DruxtFieldFileDefault.vue'
 
-import { mapActions } from 'vuex'
-
 /**
- * Image field.
+ * Image Url field.
  *
  * _This component is intended to be rendered by the `<druxt-field />` component._
  *
@@ -39,12 +39,23 @@ import { mapActions } from 'vuex'
  * @todo Add an example to Image field.
  */
 export default {
-  name: 'DruxtFieldImage',
+  name: 'DruxtFieldImageUrl',
 
   /**
    * @extends DruxtFieldFileDefault
    * @see {@link DruxtFieldFileDefault}
    */
   extends: DruxtFieldFileDefault,
+
+  methods: {
+    /**
+     * Formats the item output.
+     *
+     * @param {object} entity - The image entity.
+     *
+     * @return {string}
+     */
+    format: (entity) => (((entity.attributes || {}).uri || {}).url || null)
+  }
 }
 </script>

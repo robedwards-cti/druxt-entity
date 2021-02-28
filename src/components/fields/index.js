@@ -19,6 +19,9 @@ export { DruxtFieldFileDefault }
 import DruxtFieldImage from './DruxtFieldImage.vue'
 export { DruxtFieldImage }
 
+import DruxtFieldImageUrl from './DruxtFieldImageUrl.vue'
+export { DruxtFieldImageUrl }
+
 import DruxtFieldLink from './DruxtFieldLink.vue'
 export { DruxtFieldLink }
 
