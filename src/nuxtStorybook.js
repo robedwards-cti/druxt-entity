@@ -15,9 +15,10 @@ export default async function ({ stories }) {
   const { addTemplate, options } = this
 
   const druxt = new DruxtClient(options.druxt.baseUrl, options.druxt)
+  const index = await druxt.getIndex()
 
   const resourceType = 'entity_view_display--entity_view_display'
-  const query = new DrupalJsonApiParams()
+  let query = new DrupalJsonApiParams()
     .addFilter('status', 1)
     .addFields(resourceType, ['bundle', 'mode', 'targetEntityType'])
   const collections = await druxt.getCollectionAll(resourceType, query)
@@ -37,6 +38,13 @@ export default async function ({ stories }) {
 
   // Write Entity stories.
   for (const entityType of Object.keys(entities)) {
+    const bundlesResource = `${entityType}_type--${entityType}_type`
+    if (index[bundlesResource]) {
+      query = new DrupalJsonApiParams()
+        .addFilter('status', 1)
+        .addFields(bundlesResource, ['description', 'label', 'name'])
+    }
+
     for (const bundle of Object.keys(entities[entityType])) {
       const modes = Array.from(new Set(entities[entityType][bundle]))
 

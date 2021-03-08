@@ -1,27 +1,14 @@
-import { DruxtEntity } from 'druxt-entity'
+import { default as DruxtEntity } from 'druxt-entity/src/components/DruxtEntity.vue'
 
 export default {
   title: '<%= options.title %>',
   component: DruxtEntity,
   argTypes: {
-    mode: {
-      control: null,
-      description: 'The Entity display mode.',
-      table: {
-        defaultValue: { summary: 'default' },
-      },
-    },
-    type: {
-      control: null,
-      description: 'The JSON:API resource type.',
-    },
     uuid: {
       control: {
         type: 'select',
         options: [<%= options.uuids.map((s) => `'${s}'`).join(', ') %>],
       },
-      description: 'The Entity UUID.',
-      type: { required: true },
     }
   },
 }
